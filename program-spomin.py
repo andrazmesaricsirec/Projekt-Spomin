@@ -15,19 +15,26 @@ class Plosca:
     def dodaj_karte(self, kup_kart):
         for i in range(self.visina):
             for j in range(self.sirina):
-                self.karte[i][j] = kup_kart[]
+                self.karte[i][j] = kup_kart.pop()
 
 class Karta:
 
     def __init__(self, ime):
         self.ime = ime
 
+    def __str__(self):
+        return "Karta:{}".format(self.ime)
+
+    def __repr__(self):
+
+        return "{}".format(self.ime)
+
 # ustvarimo ploščo
 p = Plosca()
 
 # pripravimo kup kart
 kup_kart = []
-with open(imena_kart.txt) as f:
+with open("imena_kart.txt") as f:
     for vrstica in f:
         kup_kart.append(Karta(vrstica.strip()))
         kup_kart.append(Karta(vrstica.strip()))
@@ -37,3 +44,6 @@ shuffle(kup_kart)
 
 # raydelimo karte
 p.dodaj_karte(kup_kart)
+
+# prikažemo
+print(p.karte)

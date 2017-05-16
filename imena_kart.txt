@@ -2,3 +2,7 @@ raca
 bik
 konj
 goska
+pes
+macka
+stol
+miska
