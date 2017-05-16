@@ -23,7 +23,7 @@ class Karta:
         self.ime = ime
 
     def __str__(self):
-        return "{}".format(self.ime)
+        return "Karta:{}".format(self.ime)
 
     def __repr__(self):
 
