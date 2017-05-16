@@ -42,7 +42,7 @@ with open("imena_kart.txt") as f:
 # premešamo kup                
 shuffle(kup_kart)
 
-# raydelimo karte
+# razdelimo karte
 p.dodaj_karte(kup_kart)
 
 # prikažemo
