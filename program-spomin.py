@@ -24,6 +24,7 @@ class Karta:
 
     def __str__(self):
         return "{}".format(self.ime)
+    
 
     def __repr__(self):
 
