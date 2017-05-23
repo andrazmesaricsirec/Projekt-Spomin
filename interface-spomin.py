@@ -17,12 +17,42 @@ class Program:
         self.drugi_i = None
         self.drufi_j = None
         self.gumbi = []
-
+        self.stevec = 0
+        self.stevec_poskusov = 0
+        
         
     def pozeni(self):
+        self.naredi_okno()
         self.pripravi_kup_kart()
         self.razdeli_karte()
         self.naredi_gumbe()
+        self.naslovi()
+
+    def naredi_okno(self):
+        self.okno = tk.Tk().wm_title("Igra Spomin")
+        self.frame_naslova = tk.Frame(self.okno)
+        self.frame_naslova.pack()
+
+        self.frame_stevcev = tk.Frame(self.okno)
+        self.frame_stevcev.pack()
+        
+        self.frame_igre = tk.Frame(self.okno)
+        self.frame_igre.pack()
+
+    def naslovi(self):
+        self.naslov = tk.Label(self.frame_naslova,text = 'SPOMIN', font=(16))
+        self.naslov.pack()
+
+
+        
+        self.stevilo_poskusov_text = tk.Label(self.frame_stevcev, text = 'Število Poskusov:')
+        self.stevilo_poskusov_text.grid(row = 0, column = 0)
+
+        self.stevilo_poskusov = tk.Label(self.frame_stevcev, text = "")
+        self.stevilo_poskusov.grid(row = 0, column = 1)
+
+        self.zmaga = tk.Label(self.frame_stevcev, text = '')
+        self.zmaga.grid(row = 1, column = 0)
         
 
     def razdeli_karte(self):
@@ -38,13 +68,12 @@ class Program:
         
     def naredi_gumbe(self):
         self.gumbi = []
-        okno = tk.Tk()
         for i in range(self.p.visina):
             vrstica = []
             for j in range(self.p.sirina):
                 k = self.p.karte[i][j]
                 action_with_arg = partial(self.prikazi, [i,j])
-                gumb = tk.Button(okno, text = "", command = action_with_arg, height = 8, width = 10)
+                gumb = tk.Button(self.frame_igre, text = "", command = action_with_arg, height = 8, width = 10)
                 gumb.grid(row = i, column = j)
                 vrstica.append(gumb)
             self.gumbi.append(vrstica)
@@ -70,8 +99,12 @@ class Program:
                 self.drugi_gumb = gumb
                 self.drugi_i = i
                 self.drugi_j = j
+
+                self.stevec_poskusov += 1
+                self.stevilo_poskusov.configure(text = str(self.stevec_poskusov))
                 
                 self.enakost(self.prvi_gumb, self.drugi_gumb)
+
 
     def enakost(self, prvi, drugi):
         if prvi != drugi:
@@ -89,19 +122,27 @@ class Program:
                 self.drugi_i = None
                 self.prvi_j = None
                 self.drugi_j = None
+
+                self.stevec += 1
+
+                if self.stevec == 8:
+                    self.konec()
+                
                 
             else:
                 
                 prvi.after(1000, lambda: prvi.configure(text = ""))
                 drugi.after(1000, lambda: drugi.configure(text = ""))
-
-
-
                 
                 self.prvi_gumb = None
                 self.drugi_gumb = None
+
         else:
             pass
+
+    def konec(self):
+        self.zmaga.configure(text = "ZMAGA!")
+        
 
         
 pr = Program()

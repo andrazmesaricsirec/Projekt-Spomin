@@ -45,5 +45,4 @@ shuffle(kup_kart)
 # razdelimo karte
 p.dodaj_karte(kup_kart)
 
-# prikažemo
-print(p.karte)
+
