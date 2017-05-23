@@ -51,7 +51,7 @@ class Program:
         self.stevilo_poskusov = tk.Label(self.frame_stevcev, text = "")
         self.stevilo_poskusov.grid(row = 0, column = 1)
 
-        self.zmaga = tk.Label(self.frame_stevcev, text = '')
+        self.zmaga = tk.Label(self.frame_stevcev, text = "")
         self.zmaga.grid(row = 1, column = 0)
         
 
@@ -73,7 +73,9 @@ class Program:
             for j in range(self.p.sirina):
                 k = self.p.karte[i][j]
                 action_with_arg = partial(self.prikazi, [i,j])
-                gumb = tk.Button(self.frame_igre, text = "", command = action_with_arg, height = 8, width = 10)
+                slika_karte = tk.PhotoImage(file = "blank.gif")
+                gumb = tk.Button(self.frame_igre, text = "", image = slika_karte, command = action_with_arg)
+                gumb.image = slika_karte
                 gumb.grid(row = i, column = j)
                 vrstica.append(gumb)
             self.gumbi.append(vrstica)
@@ -82,13 +84,18 @@ class Program:
         i = l[0]
         j = l[1]
         gumb = self.gumbi[i][j]
-        if gumb is None:
+        if gumb is None or self.prvi_gumb == gumb:
             pass
         else:
             if gumb["text"] == "":
-                gumb.configure(text = self.p.karte[i][j])
+                ime_slike = "{}.gif".format(self.p.karte[i][j])
+                trenutna_slika = tk.PhotoImage(file = ime_slike)
+                gumb.configure(text = self.p.karte[i][j], image = trenutna_slika)
+                gumb.image = trenutna_slika
             else:
-                gumb.configure(text = "")
+                slika_karte = tk.PhotoImage(file = "blank.gif")
+                gumb.configure(text = "", image = slika_karte)
+                gumb.image = slika_karte
 
 
             if self.prvi_gumb is None:
@@ -130,15 +137,23 @@ class Program:
                 
                 
             else:
-                
-                prvi.after(1000, lambda: prvi.configure(text = ""))
-                drugi.after(1000, lambda: drugi.configure(text = ""))
-                
-                self.prvi_gumb = None
-                self.drugi_gumb = None
+                drugi.after(1000, lambda: self.obrni_karti(prvi, drugi))
 
         else:
             pass
+
+    def obrni_karti(self, gumb_prvi, gumb_drugi):
+        slika_karte = tk.PhotoImage(file = "blank.gif")
+                            
+        gumb_prvi.configure(text = "", image = slika_karte)
+        gumb_prvi.image = slika_karte
+                            
+        gumb_drugi.configure(text = "", image = slika_karte)
+        gumb_drugi.image = slika_karte
+                            
+        self.prvi_gumb = None
+        self.drugi_gumb = None
+
 
     def konec(self):
         self.zmaga.configure(text = "ZMAGA!")
