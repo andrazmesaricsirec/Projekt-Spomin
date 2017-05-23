@@ -166,7 +166,7 @@ class Program:
 pr = Program()
 pr.pozeni()
 
-
+tk.mainloop()
 
 
 
