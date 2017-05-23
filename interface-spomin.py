@@ -3,6 +3,7 @@ import tkinter as tk
 from random import shuffle
 from functools import partial
 import time
+import turtle
 
 
 class Program:
@@ -40,7 +41,7 @@ class Program:
         self.frame_igre.pack()
 
     def naslovi(self):
-        self.naslov = tk.Label(self.frame_naslova,text = 'SPOMIN', font=(16))
+        self.naslov = tk.Label(self.frame_naslova,text = 'SPOMIN', font=(30))
         self.naslov.pack()
 
 
@@ -50,10 +51,6 @@ class Program:
 
         self.stevilo_poskusov = tk.Label(self.frame_stevcev, text = "")
         self.stevilo_poskusov.grid(row = 0, column = 1)
-
-        self.zmaga = tk.Label(self.frame_stevcev, text = "")
-        self.zmaga.grid(row = 1, column = 0)
-        
 
     def razdeli_karte(self):
         self.p.dodaj_karte(self.kup_kart)
@@ -159,7 +156,13 @@ class Program:
 
 
     def konec(self):
-        self.zmaga.configure(text = "ZMAGA!")
+        turtle.hideturtle()
+        turtle.pencolor("green")
+        turtle.write("ZMAGA!", align="center", font=("Arial", 40))
+        
+
+
+    
         
 
         
