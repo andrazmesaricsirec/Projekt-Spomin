@@ -92,8 +92,8 @@ class Program:
                 
             else:
                 
-                prvi.configure(text = "")            
-                drugi.configure(text = "")
+                prvi.after(1000, lambda: prvi.configure(text = ""))
+                drugi.after(1000, lambda: drugi.configure(text = ""))
 
 
 
