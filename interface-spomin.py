@@ -87,30 +87,33 @@ class Program:
         if gumb is None or self.prvi_gumb == gumb:
             pass
         else:
-            if gumb["text"] == "":
-                ime_slike = "{}.gif".format(self.p.karte[i][j])
-                trenutna_slika = tk.PhotoImage(file = ime_slike)
-                gumb.configure(text = self.p.karte[i][j], image = trenutna_slika)
-                gumb.image = trenutna_slika
+            if self.drugi_gumb == None:
+                if gumb["text"] == "":
+                    ime_slike = "{}.gif".format(self.p.karte[i][j])
+                    trenutna_slika = tk.PhotoImage(file = ime_slike)
+                    gumb.configure(text = self.p.karte[i][j], image = trenutna_slika)
+                    gumb.image = trenutna_slika
+                else:
+                    slika_karte = tk.PhotoImage(file = "blank.gif")
+                    gumb.configure(text = "", image = slika_karte)
+                    gumb.image = slika_karte
+
+
+                if self.prvi_gumb is None:
+                    self.prvi_gumb = gumb
+                    self.prvi_i = i
+                    self.prvi_j = j
+                else:
+                    self.drugi_gumb = gumb
+                    self.drugi_i = i
+                    self.drugi_j = j
+
+                    self.stevec_poskusov += 1
+                    self.stevilo_poskusov.configure(text = str(self.stevec_poskusov))
+                    
+                    self.enakost(self.prvi_gumb, self.drugi_gumb)
             else:
-                slika_karte = tk.PhotoImage(file = "blank.gif")
-                gumb.configure(text = "", image = slika_karte)
-                gumb.image = slika_karte
-
-
-            if self.prvi_gumb is None:
-                self.prvi_gumb = gumb
-                self.prvi_i = i
-                self.prvi_j = j
-            else:
-                self.drugi_gumb = gumb
-                self.drugi_i = i
-                self.drugi_j = j
-
-                self.stevec_poskusov += 1
-                self.stevilo_poskusov.configure(text = str(self.stevec_poskusov))
-                
-                self.enakost(self.prvi_gumb, self.drugi_gumb)
+                pass
 
 
     def enakost(self, prvi, drugi):
