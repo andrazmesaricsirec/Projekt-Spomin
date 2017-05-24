@@ -137,7 +137,7 @@ class Program:
                 
                 
             else:
-                drugi.after(1000, lambda: self.obrni_karti(prvi, drugi))
+                drugi.after(500, lambda: self.obrni_karti(prvi, drugi))
 
         else:
             pass
