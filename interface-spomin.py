@@ -41,7 +41,10 @@ class Program:
         self.frame_igre.pack()
 
     def naslovi(self):
-        self.naslov = tk.Label(self.frame_naslova,text = 'SPOMIN', font=(30))
+        slika_naslova = tk.PhotoImage(file = "naslov.png")
+        
+        self.naslov = tk.Label(self.frame_naslova, image = slika_naslova)
+        self.naslov.image = slika_naslova
         self.naslov.pack()
 
 
@@ -137,7 +140,7 @@ class Program:
                 
                 
             else:
-                drugi.after(500, lambda: self.obrni_karti(prvi, drugi))
+                drugi.after(800, lambda: self.obrni_karti(prvi, drugi))
 
         else:
             pass
