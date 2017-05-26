@@ -160,6 +160,9 @@ class Program:
         self.drugi_gumb = None
 
     def konec(self):
+        self.stevilo_poskusov_text.configure(font = "50", fg = "green")
+        self.stevilo_poskusov.configure(font = "50", fg = "green")
+        
         datum = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
         with open("rezultati.txt", "a") as r:
             r.write("{} poskusov ....... {}\n".format(str(self.stevec_poskusov), datum))
