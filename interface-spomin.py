@@ -19,10 +19,9 @@ class Program:
         self.drugi_i = None
         self.drufi_j = None
         self.gumbi = []
-        self.stevec = 0
+        self.stevec_pravilnih = 0
         self.stevec_poskusov = 0
-        
-        
+           
     def pozeni(self):
         self.naredi_okno()
         self.pripravi_kup_kart()
@@ -48,8 +47,6 @@ class Program:
         self.naslov = tk.Label(self.frame_naslova, image = slika_naslova)
         self.naslov.image = slika_naslova
         self.naslov.pack()
-
-
         
         self.stevilo_poskusov_text = tk.Label(self.frame_stevcev, text = 'Število Poskusov:')
         self.stevilo_poskusov_text.grid(row = 0, column = 0)
@@ -110,13 +107,11 @@ class Program:
                     self.drugi_i = i
                     self.drugi_j = j
 
-                    self.stevec_poskusov += 1
-                    self.stevilo_poskusov.configure(text = str(self.stevec_poskusov))
+                    self.dodaj_poskus()
                     
                     self.enakost(self.prvi_gumb, self.drugi_gumb)
             else:
                 pass
-
 
     def enakost(self, prvi, drugi):
         if prvi != drugi:
@@ -135,11 +130,7 @@ class Program:
                 self.prvi_j = None
                 self.drugi_j = None
 
-                self.stevec += 1
-
-                if self.stevec == 8:
-                    self.konec()
-                
+                self.dodaj_pravilno_resitev()  
                 
             else:
                 drugi.after(800, lambda: self.obrni_karti(prvi, drugi))
@@ -147,6 +138,15 @@ class Program:
         else:
             pass
 
+    def dodaj_poskus(self):
+        self.stevec_poskusov += 1
+        self.stevilo_poskusov.configure(text = str(self.stevec_poskusov))
+
+    def dodaj_pravilno_resitev(self):
+        self.stevec_pravilnih += 1
+        if self.stevec_pravilnih == 8:
+                self.konec()
+           
     def obrni_karti(self, gumb_prvi, gumb_drugi):
         slika_karte = tk.PhotoImage(file = "blank.gif")
                             
@@ -159,23 +159,19 @@ class Program:
         self.prvi_gumb = None
         self.drugi_gumb = None
 
-
     def konec(self):
         datum = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
         with open("rezultati.txt", "a") as r:
             r.write("{} poskusov ....... {}\n".format(str(self.stevec_poskusov), datum))
-        
-
-
     
 class Zacetek:
 
     def __init__(self, osnovno_okno):
         self.osnovno_okno = osnovno_okno
         self.frame = tk.Frame(self.osnovno_okno)
-        self.button1 = tk.Button(self.frame, text = 'start', width = 25, command = self.zazeni_program)
+        self.button1 = tk.Button(self.frame, text = 'START', width = 25, command = self.zazeni_program, fg = "green")
         self.button1.pack()
-        self.button2 = tk.Button(self.frame, text = 'rezultati', width = 25, command = self.zazeni_program_rezultati)
+        self.button2 = tk.Button(self.frame, text = 'REZULTATI', width = 25, command = self.zazeni_program_rezultati)
         self.button2.pack()
         self.frame.pack()
 
@@ -191,7 +187,6 @@ class Zacetek:
         self.zazeni_program = tk.Toplevel(self.osnovno_okno)
         self.zacetek_programa = Rezultati(self.zazeni_program)
 
-
 class Rezultati:
     def __init__(self, osnovno_okno):
         self.osnovno_okno = osnovno_okno
@@ -206,8 +201,7 @@ class Rezultati:
         self.listbox.insert(tk.END, "Rezultati:")
 
         for rezultat in rezultati:
-            self.listbox.insert(tk.END, rezultat)        
-
+            self.listbox.insert(tk.END, rezultat)
 
 def tk_okno():
     okno = tk.Tk()
@@ -219,6 +213,19 @@ tk_okno()
 
 
 
+
+
+
+
+#https://s-media-cache-ak0.pinimg.com/originals/74/0b/df/740bdfde43a6acc7dd91ae8818ad4f7d.jpg
+#http://www.dogsinpictures.com/images/brown_white_clipart_dog_with_red_collar.jpg
+#https://s-media-cache-ak0.pinimg.com/736x/e1/ff/ec/e1ffecab3045b6cc5703d5c3af05976a.jpg
+#http://clipartix.com/panda-clipart-image-5792/
+#https://openclipart.org/image/800px/svg_to_png/214620/1424522664.png
+#http://images.clipartpanda.com/cupcake-clipart-Cupcake_Clipart_07.jpeg
+#http://content.mycutegraphics.com/graphics/food/whole-pizza.png
+#https://img.clipartfest.com/ef3d4171ede068fa9c442dcb73879406_electric-guitar-clip-art-electric-guitar-clipart_600-447.png
+#http://images.clipartpanda.com/hot-air-balloon-clip-art-hot-air-balloon-md.png
 
 
 
