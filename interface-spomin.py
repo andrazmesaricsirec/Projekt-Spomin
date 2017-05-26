@@ -1,10 +1,37 @@
-from program_spomin import Plosca, Karta
 import tkinter as tk
 from random import shuffle
 from functools import partial
 import time
 import datetime
 
+class Plosca:
+
+    def __init__(self, sirina=4, visina=4):
+        self.sirina = sirina
+        self.visina = visina
+        self.karte = []
+        for _ in range(visina):
+            vrstica = []
+            for _ in range(sirina):
+                vrstica.append(None)
+            self.karte.append(vrstica)
+
+    def dodaj_karte(self, kup_kart):
+        for i in range(self.visina):
+            for j in range(self.sirina):
+                self.karte[i][j] = kup_kart.pop()
+
+class Karta:
+
+    def __init__(self, ime):
+        self.ime = ime
+
+    def __str__(self):
+        return "{}".format(self.ime)
+
+    def __repr__(self):
+
+        return "{}".format(self.ime)
 
 class Program:
 
