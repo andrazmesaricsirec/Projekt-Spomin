@@ -57,13 +57,13 @@ class Program:
         self.p.sirina = 10
         self.ime_datoteke = "imena_kart_10x4.txt"
         self.pozeni()
-        self.potrebno_stevilo_za_zmago = 20
+        self.potrebno_stevilo_za_zmago = 1 #20
         
     def stiri(self):
         self.p.sirina = 4
         self.ime_datoteke = "imena_kart_4x4.txt"
         self.pozeni()
-        self.potrebno_stevilo_za_zmago = 8
+        self.potrebno_stevilo_za_zmago = 1 #10
            
     def pozeni(self):
         self.naredi_okno()
@@ -206,9 +206,14 @@ class Program:
     def konec(self):
         self.stevilo_poskusov_text.configure(font = "50", fg = "green")
         self.stevilo_poskusov.configure(font = "50", fg = "green")
+        datoteka_rezultati = None
+        if self.p.sirina == 4:
+            datoteka_rezultati = "rezultati_4x4.txt"
+        else:
+            datoteka_rezultati = "rezultati_10x4.txt"
         
         datum = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
-        with open("rezultati.txt", "a") as r:
+        with open(datoteka_rezultati, "a") as r:
             r.write("{} poskusov ....... {}\n".format(str(self.stevec_poskusov), datum))
     
 class Zacetek:
@@ -216,13 +221,21 @@ class Zacetek:
     def __init__(self, osnovno_okno):
         self.osnovno_okno = osnovno_okno
         self.frame = tk.Frame(self.osnovno_okno)
-        self.gumb_4x4 = tk.Button(self.frame, text = '4x4', width = 25, command = self.zazeni_program_4x4, fg = "green")
-        self.gumb_4x4.pack()
-        self.gumb_10x4 = tk.Button(self.frame, text = '10x4', width = 25, command = self.zazeni_program_10x4, fg = "green")
-        self.gumb_10x4.pack()
-        self.gumb_rezultati = tk.Button(self.frame, text = 'REZULTATI', width = 25, command = self.zazeni_program_rezultati)
-        self.gumb_rezultati.pack()
         self.frame.pack()
+        
+        self.gumb_4x4 = tk.Button(self.frame, text = 'Start 4x4', width = 25, command = self.zazeni_program_4x4, fg = "green")
+        self.gumb_4x4.grid(row = 0, column = 0)
+        
+        self.gumb_10x4 = tk.Button(self.frame, text = 'Start 10x4', width = 25, command = self.zazeni_program_10x4, fg = "green")
+        self.gumb_10x4.grid(row = 0, column = 1)
+        
+        self.gumb_rezultati_4x4 = tk.Button(self.frame, text = 'Rezultati 4x4', width = 25, command = self.zazeni_program_rezultati_4x4)
+        self.gumb_rezultati_4x4.grid(row = 1, column = 0)
+        
+        self.gumb_rezultati_10x4 = tk.Button(self.frame, text = 'Rezultati 10x4', width = 25, command = self.zazeni_program_rezultati_10x4)
+        self.gumb_rezultati_10x4.grid(row = 1, column = 1)
+        
+        
 
     def zazeni_program_4x4(self):
         self.zazeni_program = tk.Toplevel(self.osnovno_okno)
@@ -236,17 +249,28 @@ class Zacetek:
         self.zacetek_programa = Program(self.zazeni_program)
         self.zacetek_programa.deset()
 
-    def zazeni_program_rezultati(self):
+    def zazeni_program_rezultati_4x4(self):
         self.zazeni_program = tk.Toplevel(self.osnovno_okno)
-        self.zacetek_programa = Rezultati(self.zazeni_program)
+        self.zacetek_programa = Rezultati(self.zazeni_program, 4)
+
+    def zazeni_program_rezultati_10x4(self):
+        self.zazeni_program = tk.Toplevel(self.osnovno_okno)
+        self.zacetek_programa = Rezultati(self.zazeni_program, 10)
 
 class Rezultati:
-    def __init__(self, osnovno_okno):
+    def __init__(self, osnovno_okno, stevilo_polj):
         self.osnovno_okno = osnovno_okno
+        self.stevilo_polj = stevilo_polj
+        datoteka_rezultati = None
+        if self.stevilo_polj == 4:
+            datoteka_rezultati = "rezultati_4x4.txt"
+        else:
+            datoteka_rezultati = "rezultati_10x4.txt"
+            
         self.osnovno_okno.wm_title("Rezultati")
         self.listbox = tk.Listbox(self.osnovno_okno)
         self.listbox.configure(width = 0, height = 25)
-        with open("rezultati.txt", "r") as r:
+        with open(datoteka_rezultati, "r") as r:
             rezultati = r.readlines()
         rezultati = [x.strip() for x in rezultati] #brez /n
         self.listbox.pack()
