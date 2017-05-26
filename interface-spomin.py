@@ -57,13 +57,13 @@ class Program:
         self.p.sirina = 10
         self.ime_datoteke = "imena_kart_10x4.txt"
         self.pozeni()
-        self.potrebno_stevilo_za_zmago = 1 #20
+        self.potrebno_stevilo_za_zmago = 20 #20
         
     def stiri(self):
         self.p.sirina = 4
         self.ime_datoteke = "imena_kart_4x4.txt"
         self.pozeni()
-        self.potrebno_stevilo_za_zmago = 1 #10
+        self.potrebno_stevilo_za_zmago = 8 #8
            
     def pozeni(self):
         self.naredi_okno()
@@ -205,7 +205,9 @@ class Program:
 
     def konec(self):
         self.stevilo_poskusov_text.configure(font = "50", fg = "green")
+        
         self.stevilo_poskusov.configure(font = "50", fg = "green")
+        
         datoteka_rezultati = None
         if self.p.sirina == 4:
             datoteka_rezultati = "rezultati_4x4.txt"
@@ -220,8 +222,18 @@ class Zacetek:
 
     def __init__(self, osnovno_okno):
         self.osnovno_okno = osnovno_okno
+
+        self.frame_naslov = tk.Frame(self.osnovno_okno)
+        self.frame_naslov.pack()
+        
         self.frame = tk.Frame(self.osnovno_okno)
         self.frame.pack()
+
+        self.frame_izbris_rezultatov = tk.Frame(self.osnovno_okno)
+        self.frame_izbris_rezultatov.pack()
+        
+        self.naslov = tk.Label(self.frame_naslov, text = "Igra Spomin", font = ("bold", 20))
+        self.naslov.pack()
         
         self.gumb_4x4 = tk.Button(self.frame, text = 'Start 4x4', width = 25, command = self.zazeni_program_4x4, fg = "green")
         self.gumb_4x4.grid(row = 0, column = 0)
@@ -234,7 +246,9 @@ class Zacetek:
         
         self.gumb_rezultati_10x4 = tk.Button(self.frame, text = 'Rezultati 10x4', width = 25, command = self.zazeni_program_rezultati_10x4)
         self.gumb_rezultati_10x4.grid(row = 1, column = 1)
-        
+
+        self.gumb_rezultati_izbris = tk.Button(self.frame_izbris_rezultatov, text = 'Izbrisi Rezultate', width = 51, command = self.izbrisi_rezultate, fg = "red")
+        self.gumb_rezultati_izbris.pack()
         
 
     def zazeni_program_4x4(self):
@@ -257,10 +271,16 @@ class Zacetek:
         self.zazeni_program = tk.Toplevel(self.osnovno_okno)
         self.zacetek_programa = Rezultati(self.zazeni_program, 10)
 
+    def izbrisi_rezultate(self):
+        open("rezultati_4x4.txt", "w").close()
+        
+        open("rezultati_10x4.txt", "w").close()
+
 class Rezultati:
     def __init__(self, osnovno_okno, stevilo_polj):
         self.osnovno_okno = osnovno_okno
         self.stevilo_polj = stevilo_polj
+        
         datoteka_rezultati = None
         if self.stevilo_polj == 4:
             datoteka_rezultati = "rezultati_4x4.txt"
@@ -270,11 +290,12 @@ class Rezultati:
         self.osnovno_okno.wm_title("Rezultati")
         self.listbox = tk.Listbox(self.osnovno_okno)
         self.listbox.configure(width = 0, height = 25)
+        
         with open(datoteka_rezultati, "r") as r:
             rezultati = r.readlines()
         rezultati = [x.strip() for x in rezultati] #brez /n
-        self.listbox.pack()
 
+        self.listbox.pack()
         self.listbox.insert(tk.END, "Rezultati:")
 
         for rezultat in rezultati:
