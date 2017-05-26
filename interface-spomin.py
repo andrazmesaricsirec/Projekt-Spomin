@@ -195,7 +195,7 @@ class Rezultati:
         self.osnovno_okno = osnovno_okno
         self.osnovno_okno.wm_title("Rezultati")
         self.listbox = tk.Listbox(self.osnovno_okno)
-        self.listbox.configure(width = 0)
+        self.listbox.configure(width = 0, height = 25)
         with open("rezultati.txt", "r") as r:
             rezultati = r.readlines()
         rezultati = [x.strip() for x in rezultati] #brez /n
