@@ -223,32 +223,26 @@ class Zacetek:
     def __init__(self, osnovno_okno):
         self.osnovno_okno = osnovno_okno
 
-        self.frame_naslov = tk.Frame(self.osnovno_okno)
-        self.frame_naslov.pack()
-        
         self.frame = tk.Frame(self.osnovno_okno)
         self.frame.pack()
-
-        self.frame_izbris_rezultatov = tk.Frame(self.osnovno_okno)
-        self.frame_izbris_rezultatov.pack()
         
-        self.naslov = tk.Label(self.frame_naslov, text = "Igra Spomin", font = ("bold", 20))
-        self.naslov.pack()
+        self.naslov = tk.Label(self.frame, text = "Igra Spomin", font = ("bold", 20))
+        self.naslov.grid(row = 0, column = 0, columnspan = 2)
         
         self.gumb_4x4 = tk.Button(self.frame, text = 'Start 4x4', width = 25, command = self.zazeni_program_4x4, fg = "green")
-        self.gumb_4x4.grid(row = 0, column = 0)
+        self.gumb_4x4.grid(row = 1, column = 0)
         
         self.gumb_10x4 = tk.Button(self.frame, text = 'Start 10x4', width = 25, command = self.zazeni_program_10x4, fg = "green")
-        self.gumb_10x4.grid(row = 0, column = 1)
+        self.gumb_10x4.grid(row = 1, column = 1)
         
         self.gumb_rezultati_4x4 = tk.Button(self.frame, text = 'Rezultati 4x4', width = 25, command = self.zazeni_program_rezultati_4x4)
-        self.gumb_rezultati_4x4.grid(row = 1, column = 0)
+        self.gumb_rezultati_4x4.grid(row = 2, column = 0)
         
         self.gumb_rezultati_10x4 = tk.Button(self.frame, text = 'Rezultati 10x4', width = 25, command = self.zazeni_program_rezultati_10x4)
-        self.gumb_rezultati_10x4.grid(row = 1, column = 1)
+        self.gumb_rezultati_10x4.grid(row = 2, column = 1)
 
-        self.gumb_rezultati_izbris = tk.Button(self.frame_izbris_rezultatov, text = 'Izbrisi Rezultate', width = 51, command = self.izbrisi_rezultate, fg = "red")
-        self.gumb_rezultati_izbris.pack()
+        self.gumb_rezultati_izbris = tk.Button(self.frame, text = 'Izbrisi Rezultate', width = 51, command = self.izbrisi_rezultate, fg = "red")
+        self.gumb_rezultati_izbris.grid(row = 3, column = 0, columnspan = 2)
         
 
     def zazeni_program_4x4(self):
