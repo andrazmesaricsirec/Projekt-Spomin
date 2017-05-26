@@ -10,9 +10,11 @@ class Plosca:
         self.sirina = sirina
         self.visina = visina
         self.karte = []
-        for _ in range(visina):
+
+    def naredi_seznam(self):        
+        for _ in range(self.visina):
             vrstica = []
-            for _ in range(sirina):
+            for _ in range(self.sirina):
                 vrstica.append(None)
             self.karte.append(vrstica)
 
@@ -48,9 +50,24 @@ class Program:
         self.gumbi = []
         self.stevec_pravilnih = 0
         self.stevec_poskusov = 0
+        self.ime_datoteke = None
+        self.potrebno_stevilo_za_zmago = None
+        
+    def deset(self):
+        self.p.sirina = 10
+        self.ime_datoteke = "imena_kart_10x4.txt"
+        self.pozeni()
+        self.potrebno_stevilo_za_zmago = 20
+        
+    def stiri(self):
+        self.p.sirina = 4
+        self.ime_datoteke = "imena_kart_4x4.txt"
+        self.pozeni()
+        self.potrebno_stevilo_za_zmago = 8
            
     def pozeni(self):
         self.naredi_okno()
+        self.p.naredi_seznam()
         self.pripravi_kup_kart()
         self.razdeli_karte()
         self.naredi_gumbe()
@@ -85,7 +102,7 @@ class Program:
         self.p.dodaj_karte(self.kup_kart)
 
     def pripravi_kup_kart(self):
-        with open("imena_kart.txt") as f:
+        with open(self.ime_datoteke) as f:
             for vrstica in f:
                 self.kup_kart.append(Karta(vrstica.strip()))
                 self.kup_kart.append(Karta(vrstica.strip()))
@@ -171,7 +188,7 @@ class Program:
 
     def dodaj_pravilno_resitev(self):
         self.stevec_pravilnih += 1
-        if self.stevec_pravilnih == 8:
+        if self.stevec_pravilnih == self.potrebno_stevilo_za_zmago:
                 self.konec()
            
     def obrni_karti(self, gumb_prvi, gumb_drugi):
@@ -199,21 +216,27 @@ class Zacetek:
     def __init__(self, osnovno_okno):
         self.osnovno_okno = osnovno_okno
         self.frame = tk.Frame(self.osnovno_okno)
-        self.button1 = tk.Button(self.frame, text = 'START', width = 25, command = self.zazeni_program, fg = "green")
-        self.button1.pack()
-        self.button2 = tk.Button(self.frame, text = 'REZULTATI', width = 25, command = self.zazeni_program_rezultati)
-        self.button2.pack()
+        self.gumb_4x4 = tk.Button(self.frame, text = '4x4', width = 25, command = self.zazeni_program_4x4, fg = "green")
+        self.gumb_4x4.pack()
+        self.gumb_10x4 = tk.Button(self.frame, text = '10x4', width = 25, command = self.zazeni_program_10x4, fg = "green")
+        self.gumb_10x4.pack()
+        self.gumb_rezultati = tk.Button(self.frame, text = 'REZULTATI', width = 25, command = self.zazeni_program_rezultati)
+        self.gumb_rezultati.pack()
         self.frame.pack()
 
-    def zazeni_program(self):
-        
+    def zazeni_program_4x4(self):
         self.zazeni_program = tk.Toplevel(self.osnovno_okno)
         pr = Program(self.zazeni_program)
         self.zacetek_programa = Program(self.zazeni_program)
-        self.zacetek_programa.pozeni()
+        self.zacetek_programa.stiri()
+
+    def zazeni_program_10x4(self):
+        self.zazeni_program = tk.Toplevel(self.osnovno_okno)
+        pr = Program(self.zazeni_program)
+        self.zacetek_programa = Program(self.zazeni_program)
+        self.zacetek_programa.deset()
 
     def zazeni_program_rezultati(self):
-        
         self.zazeni_program = tk.Toplevel(self.osnovno_okno)
         self.zacetek_programa = Rezultati(self.zazeni_program)
 
