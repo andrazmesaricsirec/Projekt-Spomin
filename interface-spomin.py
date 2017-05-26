@@ -3,12 +3,13 @@ import tkinter as tk
 from random import shuffle
 from functools import partial
 import time
-import turtle
+import datetime
 
 
 class Program:
 
-    def __init__(self):
+    def __init__(self, osnovno_okno):
+        self.osnovno_okno = osnovno_okno
         self.p = Plosca()
         self.kup_kart = []
         self.prvi_gumb = None
@@ -30,7 +31,8 @@ class Program:
         self.naslovi()
 
     def naredi_okno(self):
-        self.okno = tk.Tk().wm_title("Igra Spomin")
+        self.okno = self.osnovno_okno
+        self.okno.wm_title("Igra Spomin")
         self.frame_naslova = tk.Frame(self.okno)
         self.frame_naslova.pack()
 
@@ -159,20 +161,62 @@ class Program:
 
 
     def konec(self):
-        turtle.hideturtle()
-        turtle.pencolor("green")
-        turtle.write("ZMAGA!", align="center", font=("Arial", 40))
+        datum = datetime.datetime.now().strftime("%d.%m.%Y %H:%M")
+        with open("rezultati.txt", "a") as r:
+            r.write("{} poskusov ....... {}\n".format(str(self.stevec_poskusov), datum))
         
 
 
     
-        
+class Zacetek:
 
-        
-pr = Program()
-pr.pozeni()
+    def __init__(self, osnovno_okno):
+        self.osnovno_okno = osnovno_okno
+        self.frame = tk.Frame(self.osnovno_okno)
+        self.button1 = tk.Button(self.frame, text = 'start', width = 25, command = self.zazeni_program)
+        self.button1.pack()
+        self.button2 = tk.Button(self.frame, text = 'rezultati', width = 25, command = self.zazeni_program_rezultati)
+        self.button2.pack()
+        self.frame.pack()
 
-tk.mainloop()
+    def zazeni_program(self):
+        
+        self.zazeni_program = tk.Toplevel(self.osnovno_okno)
+        pr = Program(self.zazeni_program)
+        self.zacetek_programa = Program(self.zazeni_program)
+        self.zacetek_programa.pozeni()
+
+    def zazeni_program_rezultati(self):
+        
+        self.zazeni_program = tk.Toplevel(self.osnovno_okno)
+        self.zacetek_programa = Rezultati(self.zazeni_program)
+
+
+class Rezultati:
+    def __init__(self, osnovno_okno):
+        self.osnovno_okno = osnovno_okno
+        self.osnovno_okno.wm_title("Rezultati")
+        self.listbox = tk.Listbox(self.osnovno_okno)
+        self.listbox.configure(width = 0)
+        with open("rezultati.txt", "r") as r:
+            rezultati = r.readlines()
+        rezultati = [x.strip() for x in rezultati] #brez /n
+        self.listbox.pack()
+
+        self.listbox.insert(tk.END, "Rezultati:")
+
+        for rezultat in rezultati:
+            self.listbox.insert(tk.END, rezultat)        
+
+
+def tk_okno():
+    okno = tk.Tk()
+    okno.wm_title("Zacetni meni")
+    zacetek_programa = Zacetek(okno)
+    okno.mainloop()
+
+tk_okno()
+
 
 
 
