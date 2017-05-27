@@ -117,7 +117,7 @@ class Program:
                 k = self.p.karte[i][j]
                 action_with_arg = partial(self.prikazi, [i,j])
                 slika_karte = tk.PhotoImage(file = "blank.gif")
-                gumb = tk.Button(self.frame_igre, text = "", image = slika_karte, command = action_with_arg)
+                gumb = tk.Button(self.frame_igre, text = "", image = slika_karte, command = action_with_arg, bg = "white")
                 gumb.image = slika_karte
                 gumb.grid(row = i, column = j)
                 vrstica.append(gumb)
