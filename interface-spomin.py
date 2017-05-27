@@ -92,7 +92,7 @@ class Program:
         self.naslov.image = slika_naslova
         self.naslov.pack()
         
-        self.stevilo_poskusov_text = tk.Label(self.frame_stevcev, text = 'Število Poskusov:')
+        self.stevilo_poskusov_text = tk.Label(self.frame_stevcev, text = "Število Poskusov:")
         self.stevilo_poskusov_text.grid(row = 0, column = 0)
 
         self.stevilo_poskusov = tk.Label(self.frame_stevcev, text = "")
@@ -189,7 +189,7 @@ class Program:
     def dodaj_pravilno_resitev(self):
         self.stevec_pravilnih += 1
         if self.stevec_pravilnih == self.potrebno_stevilo_za_zmago:
-                self.konec()
+            self.konec()
            
     def obrni_karti(self, gumb_prvi, gumb_drugi):
         slika_karte = tk.PhotoImage(file = "blank.gif")
@@ -223,28 +223,29 @@ class Zacetek:
     def __init__(self, osnovno_okno):
         self.osnovno_okno = osnovno_okno
 
+    def naredi_zacetne_gumbe(self):
+
         self.frame = tk.Frame(self.osnovno_okno)
         self.frame.pack()
         
         self.naslov = tk.Label(self.frame, text = "Igra Spomin", font = ("bold", 20))
         self.naslov.grid(row = 0, column = 0, columnspan = 2)
         
-        self.gumb_4x4 = tk.Button(self.frame, text = 'Start 4x4', width = 25, command = self.zazeni_program_4x4, fg = "green")
+        self.gumb_4x4 = tk.Button(self.frame, text = "Start 4x4", width = 25, command = self.zazeni_program_4x4, fg = "green")
         self.gumb_4x4.grid(row = 1, column = 0)
         
-        self.gumb_10x4 = tk.Button(self.frame, text = 'Start 10x4', width = 25, command = self.zazeni_program_10x4, fg = "green")
+        self.gumb_10x4 = tk.Button(self.frame, text = "Start 10x4", width = 25, command = self.zazeni_program_10x4, fg = "green")
         self.gumb_10x4.grid(row = 1, column = 1)
         
-        self.gumb_rezultati_4x4 = tk.Button(self.frame, text = 'Rezultati 4x4', width = 25, command = self.zazeni_program_rezultati_4x4)
+        self.gumb_rezultati_4x4 = tk.Button(self.frame, text = "Rezultati 4x4", width = 25, command = self.zazeni_program_rezultati_4x4)
         self.gumb_rezultati_4x4.grid(row = 2, column = 0)
         
-        self.gumb_rezultati_10x4 = tk.Button(self.frame, text = 'Rezultati 10x4', width = 25, command = self.zazeni_program_rezultati_10x4)
+        self.gumb_rezultati_10x4 = tk.Button(self.frame, text = "Rezultati 10x4", width = 25, command = self.zazeni_program_rezultati_10x4)
         self.gumb_rezultati_10x4.grid(row = 2, column = 1)
 
-        self.gumb_rezultati_izbris = tk.Button(self.frame, text = 'Izbrisi Rezultate', width = 51, command = self.izbrisi_rezultate, fg = "red")
+        self.gumb_rezultati_izbris = tk.Button(self.frame, text = "Izbrisi Rezultate", width = 51, command = self.izbrisi_rezultate, fg = "red")
         self.gumb_rezultati_izbris.grid(row = 3, column = 0, columnspan = 2)
         
-
     def zazeni_program_4x4(self):
         self.zazeni_program = tk.Toplevel(self.osnovno_okno)
         pr = Program(self.zazeni_program)
@@ -266,8 +267,7 @@ class Zacetek:
         self.zacetek_programa = Rezultati(self.zazeni_program, 10)
 
     def izbrisi_rezultate(self):
-        open("rezultati_4x4.txt", "w").close()
-        
+        open("rezultati_4x4.txt", "w").close()   
         open("rezultati_10x4.txt", "w").close()
 
 class Rezultati:
@@ -299,6 +299,7 @@ def tk_okno():
     okno = tk.Tk()
     okno.wm_title("Zacetni meni")
     zacetek_programa = Zacetek(okno)
+    zacetek_programa.naredi_zacetne_gumbe()
     okno.mainloop()
 
 tk_okno()
@@ -318,7 +319,17 @@ tk_okno()
 #http://content.mycutegraphics.com/graphics/food/whole-pizza.png
 #https://img.clipartfest.com/ef3d4171ede068fa9c442dcb73879406_electric-guitar-clip-art-electric-guitar-clipart_600-447.png
 #http://images.clipartpanda.com/hot-air-balloon-clip-art-hot-air-balloon-md.png
-
+#http://www.clipartlord.com/wp-content/uploads/2015/11/banana20.png
+#http://images.clipartpanda.com/window-clipart-window4.png
+#http://images.clipartpanda.com/computer-clip-art-Computer2_Computer_Clipart_Pictures.png
+#http://images.clipartpanda.com/bird-clipart-cute-blue-bird-yellow-beak.jpg
+#https://s-media-cache-ak0.pinimg.com/originals/d4/78/05/d47805a10a6f3e976e7059fe52547145.png
+#http://clipartix.com/wp-content/uploads/2016/04/Sunshine-sun-clip-art-free-clipart-images.gif
+#http://images.clipartpanda.com/mouse-clip-art-jixoM84iE.jpeg
+#http://images.clipartpanda.com/variety-clipart-variety_of_candies_in_brightly_colored_wrappers_0071-0909-1914-0625_SMU.jpg\
+#http://images.clipartpanda.com/pineapple-clip-art-nicubunu_pineapple-1331px.png
+#http://content.mycutegraphics.com/graphics/icecream/happy-face-ice-cream-cone.png
+#http://images.clipartpanda.com/leaf-clipart-leaf-clipart-clipart.png
 
 
 
